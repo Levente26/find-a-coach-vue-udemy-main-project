@@ -5,7 +5,7 @@ import router from './router.js'
 import store from './store/index.js';
 
 import BaseCard from './components/ui/BaseCard.vue';
-import BaseCard from './components/ui/BaseButton.vue';
+import BaseButton from './components/ui/BaseButton.vue';
 
 const app = createApp(App);
 
