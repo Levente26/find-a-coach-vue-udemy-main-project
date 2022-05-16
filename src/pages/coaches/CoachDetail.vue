@@ -1,13 +1,13 @@
 <template>
-    <div></div>
+  <div>
+    details
+    <router-view></router-view>
+    <router-link to="/coaches/c1/contact">Contact</router-link>
+  </div>
 </template>
 
 <script>
-export default {
-    
-}
+export default {};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
