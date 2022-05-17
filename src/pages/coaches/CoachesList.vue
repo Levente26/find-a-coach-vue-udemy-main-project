@@ -4,13 +4,14 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button>Refresh</base-button>
-          <base-button to="/register">Register as Coach</base-button>
+          <base-button mode="outline">Refresh</base-button>
+          <base-button link to="/register">Register as Coach</base-button>
         </div>
         <ul v-if="hasCoaches">
           <coach-item
             v-for="coach in filteredCoaches"
             :key="coach.id"
+            :id="coach.id"
             :first-name="coach.firstName"
             :last-name="coach.lastName"
             :rate="coach.hourlyRate"
@@ -25,6 +26,7 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+
 export default {
   components: { CoachItem },
   computed: {
