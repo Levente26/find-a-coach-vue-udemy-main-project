@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  emit: ['change-filter'],
+  emits: ['change-filter'],
   data() {
     return {
       filters: {
