@@ -10,7 +10,7 @@ export default {
       };
   
       const response = await fetch(
-        `https://find-a-coach-7ea76-default-rtdb.europe-west1.firebasedatabase.app/${userId}.json`,
+        `https://find-a-coach-7ea76-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
         {
           method: 'PUT',
           body: JSON.stringify(coachData)
