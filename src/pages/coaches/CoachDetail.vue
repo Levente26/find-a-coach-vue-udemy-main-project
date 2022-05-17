@@ -3,13 +3,13 @@
     <section>
       <base-card>
         <h2>{{ fullName }}</h2>
-        <h3>${{ rate }} / hour</h3>
+        <h3>${{ rate }}/hour</h3>
       </base-card>
     </section>
     <section>
       <base-card>
         <header>
-          <h2>Intrested? Reach out now!</h2>
+          <h2>Interested? Reach out now!</h2>
           <base-button link :to="contactLink">Contact</base-button>
         </header>
         <router-view></router-view>
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-// console.log(this.id);
 export default {
   props: ['id'],
   data() {
@@ -53,7 +52,7 @@ export default {
     },
     contactLink() {
       return this.$route.path + '/' + this.id + '/contact';
-    }
+    },
   },
   created() {
     this.selectedCoach = this.$store.getters['coaches/coaches'].find(
@@ -62,5 +61,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

@@ -1,7 +1,11 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
-      <p>{{error}}</p>
+    <base-dialog
+      :show="!!error"
+      title="An error occurred!"
+      @close="handleError"
+    >
+      <p>{{ error }}</p>
     </base-dialog>
     <section>
       <coach-filter @change-filter="setFilters"></coach-filter>
@@ -9,7 +13,7 @@
     <section>
       <base-card>
         <div class="controls">
-          <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
+          <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
           <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
         </div>
         <div v-if="isLoading">
@@ -26,7 +30,7 @@
             :areas="coach.areas"
           ></coach-item>
         </ul>
-        <h3 v-else>No coaches found</h3>
+        <h3 v-else>No coaches found.</h3>
       </base-card>
     </section>
   </div>
@@ -37,39 +41,25 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 export default {
-  components: { CoachItem, CoachFilter },
+  components: {
+    CoachItem,
+    CoachFilter,
+  },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
         career: true,
       },
-      isLoading: false,
-      error: null,
     };
   },
-  methods: {
-    setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-    },
-    async loadCoaches() {
-      this.isLoading = true;
-      try {
-        await this.$store.dispatch('coaches/loadCoaches');
-      } catch (error) {
-        this.error = error.message || 'Something went wrong';
-      }
-      this.isLoading = false;
-    },
-    handleError() {
-      this.error = null;
-    }
-  },
-  created() {
-    this.loadCoaches();
-  },
   computed: {
+    isCoach() {
+      return this.$store.getters['coaches/isCoach'];
+    },
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
       return coaches.filter((coach) => {
@@ -88,8 +78,27 @@ export default {
     hasCoaches() {
       return !this.isLoading && this.$store.getters['coaches/hasCoaches'];
     },
-    isCoach() {
-      return this.$store.getters['coaches/isCoach'];
+  },
+  created() {
+    this.loadCoaches();
+  },
+  methods: {
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
+    },
+    async loadCoaches(refresh = false) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('coaches/loadCoaches', {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     },
   },
 };
